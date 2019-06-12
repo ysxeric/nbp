@@ -16,7 +16,7 @@ package client
 
 import (
 	log "github.com/golang/glog"
-	pb "github.com/opensds/opensds/pkg/dock/proto"
+	pb "github.com/opensds/opensds/pkg/model/proto"
 	"google.golang.org/grpc"
 )
 
@@ -27,6 +27,7 @@ import (
 type Client interface {
 	pb.ProvisionDockClient
 	pb.AttachDockClient
+	pb.FileShareDockClient
 
 	Connect(edp string) error
 
@@ -39,6 +40,7 @@ type Client interface {
 type client struct {
 	pb.ProvisionDockClient
 	pb.AttachDockClient
+	pb.FileShareDockClient
 	*grpc.ClientConn
 }
 
@@ -52,6 +54,7 @@ func (c *client) Connect(edp string) error {
 		return err
 	}
 	// Create dock client via the connection.
+	c.FileShareDockClient = pb.NewFileShareDockClient(conn)
 	c.ProvisionDockClient = pb.NewProvisionDockClient(conn)
 	c.AttachDockClient = pb.NewAttachDockClient(conn)
 	c.ClientConn = conn

@@ -14,6 +14,25 @@
 
 package model
 
+// Fileshare status
+const (
+	FileShareCreating      = "creating"
+	FileShareAvailable     = "available"
+	FileShareInUse         = "in_Use"
+	FileShareDeleting      = "deleting"
+	FileShareError         = "error"
+	FileShareErrorDeleting = "errorDeleting"
+)
+
+// fileshare snapshot status
+const (
+	FileShareSnapCreating      = "creating"
+	FileShareSnapAvailable     = "available"
+	FileShareSnapDeleting      = "deleting"
+	FileShareSnapError         = "error"
+	FileShareSnapErrorDeleting = "errorDeleting"
+)
+
 // volume status
 const (
 	VolumeCreating       = "creating"
@@ -28,7 +47,7 @@ const (
 
 // volume attach status
 const (
-	VolumeAttacing       = "attaching"
+	VolumeAttaching      = "attaching"
 	VolumeAttached       = "attached"
 	VolumeDetached       = "detached"
 	VolumeReserved       = "reserved"
@@ -51,6 +70,27 @@ const (
 	VolumeAttachAvailable     = "available"
 	VolumeAttachErrorDeleting = "errorDeleting"
 	VolumeAttachError         = "error"
+)
+
+//volume replication status
+const (
+	ReplicationDeleted        = "deleted"
+	ReplicationCreating       = "creating"
+	ReplicationDeleting       = "deleting"
+	ReplicationEnabling       = "enabling"
+	ReplicationDisabling      = "disabling"
+	ReplicationFailingOver    = "failing_over"
+	ReplicationFailingBack    = "failing_back"
+	ReplicationAvailable      = "available"
+	ReplicationError          = "error"
+	ReplicationErrorDeleting  = "error_deleting"
+	ReplicationErrorEnabling  = "error_enabling"
+	ReplicationErrorDisabling = "error_disabling"
+	ReplicationErrorFailover  = "error_failover"
+	ReplicationErrorFailback  = "error_failback"
+	ReplicationEnabled        = "enabled"
+	ReplicationDisabled       = "disabled"
+	ReplicationFailover       = "failed_over"
 )
 
 // volume group status

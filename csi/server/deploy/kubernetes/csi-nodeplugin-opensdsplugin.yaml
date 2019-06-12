@@ -14,11 +14,14 @@ spec:
       labels:
         app: csi-nodeplugin-opensdsplugin
     spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
       serviceAccount: csi-nodeplugin
       hostNetwork: true
       containers:
         - name: node-driver-registrar
-          image: quay.io/k8scsi/csi-node-driver-registrar:v1.0.1
+          image: quay.io/k8scsi/csi-node-driver-registrar:v1.1.0
           args:
             - "--v=5"
             - "--csi-address=/csi/csi.sock"
@@ -47,7 +50,7 @@ spec:
             - "--csiEndpoint=$(CSI_ENDPOINT)"
             - "--opensdsEndpoint=$(OPENSDS_ENDPOINT)"
             - "--opensdsAuthStrategy=$(OPENSDS_AUTH_STRATEGY)"
-            - "-v8"
+            - "--v=8"
           env:
             - name: CSI_ENDPOINT
               value: unix://var/lib/kubelet/plugins/csi-opensdsplugin/csi.sock
@@ -91,6 +94,16 @@ spec:
                 configMapKeyRef:
                   name: csi-configmap-opensdsplugin
                   key: ostenantname
+            - name: PASSWORD_ENCRYPTER
+              valueFrom:
+                configMapKeyRef:
+                  name: csi-configmap-opensdsplugin
+                  key: passwordencrypter
+            - name: ENABLE_ENCRYPTED
+              valueFrom:
+                configMapKeyRef:
+                  name: csi-configmap-opensdsplugin
+                  key: enableEncrypted
             - name: OS_PROJECT_NAME
               valueFrom:
                 configMapKeyRef:
@@ -108,6 +121,9 @@ spec:
             - name: pods-mount-dir
               mountPath: /var/lib/kubelet/pods
               mountPropagation: "Bidirectional"
+            - name: volume-devices-dir
+              mountPath: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices
+              mountPropagation: "Bidirectional"
             - name: pods-probe-dir
               mountPath: /dev
               mountPropagation: "HostToContainer"
@@ -121,6 +137,10 @@ spec:
         - name: socket-dir
           hostPath:
             path: /var/lib/kubelet/plugins/csi-opensdsplugin
+            type: DirectoryOrCreate
+        - name: volume-devices-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices
             type: DirectoryOrCreate
         - name: pods-mount-dir
           hostPath:

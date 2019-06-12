@@ -32,6 +32,7 @@ const (
 	KVolumeProfileId     = "profileId"
 	KVolumeLvPath        = "lvPath"
 	KVolumeReplicationId = "replicationId"
+	kStorageType         = "storagetype"
 )
 
 // CSI publish attribute keywords
@@ -41,6 +42,7 @@ const (
 	KPublishAttachId          = "AttachmentId"
 	KPublishSecondaryAttachId = "SecondaryAttachmentId"
 	KPublishAttachStatus      = "AttachmentStatus"
+	KPublishAttachMode        = "attachmode"
 )
 
 // Opensds Attachment metadata keywords
@@ -58,7 +60,21 @@ const (
 // volume prefix
 const SecondaryPrefix = "secondary-"
 
+const DefaultAvailabilityZone = "default"
+
 const (
 	// DefFSType default filesystem type
 	DefFSType = "ext4"
+)
+
+// Csi configuration parameters and values
+const (
+	// parameters
+	KCSIVolumeMode = "CSIVolumeMode"
+
+	// CSIVolumeMode = Filesystem
+	KCSIFilesystem = "Filesystem"
+
+	// CSIVolumeMode = Block
+	KCSIBlock = "Block"
 )
